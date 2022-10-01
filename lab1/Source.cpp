@@ -12,8 +12,7 @@ union digits_union {
 
 
 template<typename Type>
-Type show_bits(Type num, digits_union bit) {
-
+void show_bits(Type num, digits_union bit) {
 
     for (int j = sizeof(num) - 1; j >= 0; j--) {
         cout << " ";
@@ -27,7 +26,6 @@ Type show_bits(Type num, digits_union bit) {
     }
 
     cout << endl;
-    return 0;
 }
 
 template<class T>
@@ -35,7 +33,8 @@ void bit_manip(T, digits_union &);
 
 int main() {
     setlocale(LC_ALL, "Russian");
-    cout << "Lab Noskov Evgeny.\nTo enter the var type, use \"int\" or \"long double\" " << endl << endl;
+    cout << "Lab Noskov Evgeny and Ishchenko Darya.\nTo enter the var type, use \"int\" or \"long double\" " << endl
+         << endl;
 
     digits_union number;
     string answer;
@@ -84,11 +83,11 @@ void make_exchange(int signBit1, int signBit2, int groupSize, digits_union &numb
     bool exchBitGr1, exchBitGr2;
 
     do {
-        exchBitGr1 = (number.char_represent[signBit1 / 8] & int(1<< (signBit1 % 8)));
-        exchBitGr2 = (number.char_represent[signBit2 / 8] & int(1<<(signBit2 % 8)));
+        exchBitGr1 = (number.char_represent[signBit1 / 8] & int(1 << (signBit1 % 8)));
+        exchBitGr2 = (number.char_represent[signBit2 / 8] & int(1 << (signBit2 % 8)));
 
         if (exchBitGr1 != exchBitGr2) {
-            number.char_represent[signBit1 / 8] += ((exchBitGr1 == 1) ? -1 : 1) * int(1<< (signBit1 % 8));
+            number.char_represent[signBit1 / 8] += ((exchBitGr1 == 1) ? -1 : 1) * int(1 << (signBit1 % 8));
             number.char_represent[signBit2 / 8] += ((exchBitGr2 == 1) ? -1 : 1) * int(1 << (signBit2 % 8));
         }
 
@@ -100,6 +99,41 @@ void make_exchange(int signBit1, int signBit2, int groupSize, digits_union &numb
     show_bits(type, number);
 }
 
+template<class T>
+int getSignBit() {
+    int res;
+    while (true) {
+        cout << "enter the high order number for the first group: ";
+        cin >> res;
+        if (res >= sizeof(T) * 8)
+            cout << "number is too big, try again\n";
+        else if (res < 0)
+            cout << "number is too small, try again\n";
+        else
+            break;
+    }
+    return res;
+}
+
+template <class T>
+int getGroupSize(int signBit1, int signBit2){
+    int groupSize;
+    while (true) {
+        cout << "enter groups size: ";
+        cin >> groupSize;
+        if (groupSize >= sizeof(T) * 8)
+            cout << "number is too big, try again\n";
+        else if (groupSize < 0)
+            cout << "number is too small, try again\n";
+        else if (groupSize > (signBit1 - signBit2))
+            cout << "groups are intersected, try another value\n";
+        else if (groupSize > signBit2 + 1)
+            cout << "a number greater than the maximum size of one of the groups\n";
+        else
+            break;
+    }
+    return groupSize;
+}
 
 template<class T>
 void bit_manip(T type, digits_union &number) {
@@ -112,46 +146,13 @@ void bit_manip(T type, digits_union &number) {
 
         if (answer == 'y' || answer == 'Y') {
 
-
-            while (true) {
-                cout << "enter the high order number for the first group: ";
-                cin >> signBit1;
-                if (signBit1 >= sizeof(T) * 8)
-                    cout << "number is too big, try again\n";
-                else if (signBit1 < 0)
-                    cout << "number is too small, try again\n";
-                else
-                    break;
-            }
-
-            while (true) {
-                cout << "enter the high order number for the second group: ";
-                cin >> signBit2;
-                if (signBit2 >= sizeof(T) * 8)
-                    cout << "number is too big, try again\n";
-                else if (signBit2 < 0)
-                    cout << "number is too small, try again\n";
-                else
-                    break;
-            }
+            signBit1 = getSignBit<T>();
+            signBit2 = getSignBit<T>();
 
             if (signBit1 < signBit2)
                 swap(signBit1, signBit2);
 
-            while (true) {
-                cout << "enter groups size: ";
-                cin >> groupSize;
-                if (groupSize >= sizeof(T) * 8)
-                    cout << "number is too big, try again\n";
-                else if (groupSize < 0)
-                    cout << "number is too small, try again\n";
-                else if (groupSize > (signBit1 - signBit2))
-                    cout << "groups are intersected, try another value\n";
-                else if (groupSize > signBit2 + 1)
-                    cout << "a number greater than the maximum size of one of the groups\n";
-                else
-                    break;
-            }
+            groupSize = getGroupSize<T>(signBit1, signBit2);
 
             make_exchange(signBit1, signBit2, groupSize, number, type);
 
