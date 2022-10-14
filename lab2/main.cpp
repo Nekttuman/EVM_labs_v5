@@ -1,7 +1,7 @@
 #include "conio.h"
 #include "dos.h"
 
-const int T = 700;
+
 const char* colors[] = {"BLACK", "BLUE", "GREEN", "CYAN", "RED", "MAGENTA", "BROWN",
 			"LIGHTGRAY", "DARKGRAY", "LIGHTBLUE", "LIGHTGREEN", "LIGHTCYAN",
 			"LIGHTRED", "LIGHTMAGENTA", "YELLOW", "WHITE"};
@@ -30,7 +30,8 @@ void scroll(int direction, int lines, char l_row, char l_col, char r_row, char r
 void print(short with_scroll)
 {
     const short x1 = 10, y1 = 8, x2 = 70, y2 = 18, colors_num = 16;
-
+    const int T = 700;
+	
     clrscr();
     window(x1, y1, x2, y2);
     textattr(112);
