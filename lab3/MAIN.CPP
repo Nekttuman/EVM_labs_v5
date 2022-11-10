@@ -24,9 +24,9 @@ int main(void)
 
 	int gd, gm, err;
 
-	detectgraph(&gd, &gm); /* определение номера драйвера и режима */
+	detectgraph(&gd, &gm);
 
-	err = graphresult(); /* получение кода завершения */
+	err = graphresult();
 	if (err)
 	{
 		printf(" % s", grapherrormsg(err));
@@ -34,9 +34,9 @@ int main(void)
 		return 1;
 	}
 
-	initgraph(&gd, &gm, ""); /* инициализация системы */
+	initgraph(&gd, &gm, "");
 
-	err = graphresult(); /* получение кода завершения */
+	err = graphresult();
 
 	if (err)
 	{
@@ -45,7 +45,6 @@ int main(void)
 		return 2;
 	}
 
-	/* ................различные операторы..............*/
 
 	int maxx = getmaxx();
 	int maxy = getmaxy();
