@@ -83,11 +83,11 @@ void make_exchange(int signBit1, int signBit2, int groupSize, digits_union &numb
     bool exchBitGr1, exchBitGr2;
 
     do {
-        exchBitGr1 = (number.char_represent[signBit1 / 8] & int(1 << (signBit1 % 8)));
+        exchBitGr1 = (number.char_represent[signBit1 / 8] & int(1 << (signBit1 % 8))); /*.....define 1 or 0 at bit....*/
         exchBitGr2 = (number.char_represent[signBit2 / 8] & int(1 << (signBit2 % 8)));
 
         if (exchBitGr1 != exchBitGr2) {
-            number.char_represent[signBit1 / 8] += ((exchBitGr1 == 1) ? -1 : 1) * int(1 << (signBit1 % 8));
+            number.char_represent[signBit1 / 8] += ((exchBitGr1 == 1) ? -1 : 1) * int(1 << (signBit1 % 8)); /*.....if different bite +- 2^that bit.....*/ 
             number.char_represent[signBit2 / 8] += ((exchBitGr2 == 1) ? -1 : 1) * int(1 << (signBit2 % 8));
         }
 
