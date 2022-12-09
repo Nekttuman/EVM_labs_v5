@@ -143,7 +143,6 @@ const int sign[52] = { 49, 50,51,52,53,54,55,56,57, 48, 45,61,0,0,
 
 int code;
 int octave = 0;
-int sounded = 0;
 
 void interrupt new_int() {
     (*oldvect)();
@@ -157,7 +156,6 @@ void interrupt new_int() {
 
     else if (code > 0 && code < 53 && note[code] != -1) {
         sound(codes[octave][note[code]]);
-        sounded = 1;
     }
 
 
