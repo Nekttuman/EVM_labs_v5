@@ -109,7 +109,6 @@ void interrupt new_int();
 
 int main() {
     clrscr();
-    printf("i am daun");
     oldvect = getvect(9);
 
     setvect(9, new_int);
@@ -135,10 +134,10 @@ const int note[52] = {
 	-1, -1, -1, -1, -1, -1, -1, 12, 14, 16, 17, 19, 21, 23
 };
 
-const int sign[52] = { 49, 50,51,52,53,54,55,56,57, 48, 45,61,0,0,
-81, 87, 69, 82,  84, 89, 85, 73, 79, 80, 91, 93,0,0,
-65, 83, 68,70, 71, 72, 74, 75,76, 59, 96, 0,0,0,
-90, 88,67,86, 66, 78, 77, 44, 46, 63};
+const int sign[52] = { 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 45, 61, 0, 0,
+                81, 87, 69, 82,  84, 89, 85, 73, 79, 80, 91, 93, 0, 0,
+                65, 83, 68,70, 71, 72, 74, 75,76, 59, 96, 0, 0, 0,
+                90, 88, 67, 86, 66, 78, 77, 44, 46, 63};
 
 
 int code;
@@ -154,15 +153,15 @@ void interrupt new_int() {
     else if (code == 77 && octave < 3)
         ++octave;
 
-    else if (code > 0 && code < 53 && note[code] != -1) {
+    else if (code > 0 && code < 53 && note[code] != -1) 
         sound(codes[octave][note[code]]);
-    }
-
 
     else if (code > 129 && note[code-128] == -1 ) {
         nosound();
         printf("%c", sign[code - 130]);
     }
+    else
+        nosound();
 }
 
 
