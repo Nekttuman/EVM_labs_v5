@@ -30,8 +30,8 @@ int _getche(){
     union REGS r;
 	r.h.ah = 0;
 	int86(0x16, &r, &r);
-    putch(r.h.al);
-	return r.h.al;
+    putch(r.h.ah);
+	return r.h.ah;
 } 
 
 int _kbhit(){
